@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Weather Analysis Application</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        /* Additional styles for centering content */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 50px;
+        }
+        .features {
+            margin-top: 20px;
+            text-align: left;
+        }
+        form {
+            margin-top: 20px;
+            width: 300px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="email"],
+        input[type="password"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color:#100e0e">Welcome to Weather Analysis Application</h1>
+        <hr style="color: black;">
+        <div class="features">
+            <h2>Key Features:</h2>
+            <ul>
+                <li>Real-time weather data</li>
+                <li>Weather forecasts</li>
+                <li>Weather alerts</li>
+                <li>Weather quiz</li>
+                <li>Weather facts</li>
+                <!-- Add more features as needed -->
+            </ul>
+        </div>
+        <form  class="one" action="/login" method="post">
+            <h2 style="font-weight: bolder;">Login</h2>
+            <label for="email" style="font-weight: 600;">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password" style="font-weight: 600;">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p style="color:white;font-weight: bolder;">Don't have an account? <a href="/signup" style="color: white;font-weight: bolder;">Signup</a></p>
+    </div>
+</body>
+</html>

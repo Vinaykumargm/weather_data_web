@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Quiz</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="email"], input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Weather Quiz</h1>
+        <form id="quizForm">
+            <label for="email">Enter your email:</label>
+            <input type="email" id="email" name="email" required placeholder="Your email">
+
+            <!-- Question 1 -->
+            <div>
+                <p>1. What is the hottest planet in our solar system?</p>
+                <label><input type="radio" name="question0" value="a" required> Earth</label>
+                <label><input type="radio" name="question0" value="b"> Venus</label>
+                <label><input type="radio" name="question0" value="c"> Mercury</label>
+                <label><input type="radio" name="question0" value="d"> Mars</label>
+            </div>
+
+            <!-- Question 2 -->
+            <div>
+                <p>2. What is the name of the process by which water changes from a liquid to a gas?</p>
+                <label><input type="radio" name="question1" value="a" required> Evaporation</label>
+                <label><input type="radio" name="question1" value="b"> Condensation</label>
+                <label><input type="radio" name="question1" value="c"> Precipitation</label>
+                <label><input type="radio" name="question1" value="d"> Sublimation</label>
+            </div>
+
+            <!-- Question 3 -->
+            <div>
+                <p>3. What is the instrument used to measure wind speed?</p>
+                <label><input type="radio" name="question2" value="a" required> Barometer</label>
+                <label><input type="radio" name="question2" value="b"> Anemometer</label>
+                <label><input type="radio" name="question2" value="c">Hygrometer</label>
+                <label><input type="radio" name="question2" value="d">Thermometer</label>
+            </div>
+
+            <!-- Question 4 -->
+            <div>
+                <p>4. What is the term for the boundary between two air masses with different temperatures and humidity?</p>
+                <label><input type="radio" name="question3" value="a" required> Cold front</label>
+                <label><input type="radio" name="question3" value="b">Weather front</label>
+                <label><input type="radio" name="question3" value="c">Occluded front</label>
+                <label><input type="radio" name="question3" value="d"> Stationary front</label>
+            </div>
+
+            <!-- Question 5 -->
+            <div>
+                <p>5. What causes the green color sometimes seen in the sky during severe weather?</p>
+                <label><input type="radio" name="question4" value="a" required>Lightning</label>
+                <label><input type="radio" name="question4" value="b">Tornadoes</label>
+                <label><input type="radio" name="question4" value="c">Hail</label>
+                <label><input type="radio" name="question4" value="d">Reflection of light from water droplets</label>
+            </div>
+
+            <!-- Question 6 -->
+            <div>
+                <p>6. What is the name of a rotating column of air in contact with both the surface of the Earth and a cumulonimbus cloud?</p>
+                <label><input type="radio" name="question5" value="a" required> Tornado</label>
+                <label><input type="radio" name="question5" value="b">Hurricane</label>
+                <label><input type="radio" name="question5" value="c">Typhoon</label>
+                <label><input type="radio" name="question5" value="d"> Cyclone</label>
+            </div>
+
+            <!-- Question 7 -->
+            <div>
+                <p>7. What is the name of the layer of Earth's atmosphere that contains the ozone layer?</p>
+                <label><input type="radio" name="question6" value="a" required> Troposphere</label>
+                <label><input type="radio" name="question6" value="b">Stratosphere</label>
+                <label><input type="radio" name="question6" value="c">Mesosphere</label>
+                <label><input type="radio" name="question6" value="d"> Thermosphere</label>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit">Submit Quiz</button>
+        </form>
+
+        <!-- Rank Board -->
+        <div id="rankBoard" style="display: none;">
+            <h2>Rank Board</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody id="rankBoardContent">
+                    <!-- Rank Board Content will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- JavaScript for form submission and fetching rank board data -->
+    <script>
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const formData = new FormData(form);
+
+            const entries = Array.from(formData.entries());
+            const data = {};
+            entries.forEach(entry => {
+                data[entry[0]] = entry[1];
+            });
+
+            fetch('/quiz/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.score !== undefined) { // Assuming the server returns the score if submission is successful
+                    displayRankBoard();
+                } else {
+                    alert('Failed to submit quiz. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while submitting the quiz. Please try again.');
+            });
+        });
+
+        function displayRankBoard() {
+            fetch('/rankboard')
+                .then(response => response.json())
+                .then(data => {
+                    const rankBoardContent = document.getElementById('rankBoardContent');
+                    rankBoardContent.innerHTML = ''; // Clear previous content
+
+                    data.forEach(entry => {
+                        const row = document.createElement('tr');
+                        const emailCell = document.createElement('td');
+                        emailCell.textContent = entry.email;
+                        const scoreCell = document.createElement('td');
+                        scoreCell.textContent = entry.score;
+                        row.appendChild(emailCell);
+                        row.appendChild(scoreCell);
+                        rankBoardContent.appendChild(row);
+                    });
+
+                    document.getElementById('rankBoard').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error fetching rank board data:', error);
+                });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <style>
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .profile-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .profile {
+            margin: 10px;
+        }
+
+        .profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .profile .info {
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 200px;
+            margin: auto;
+            margin-bottom: 20px;
+        }
+
+        .feedback-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .feedback-form {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .feedback-form textarea {
+            width: 300px;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+
+        .feedback-form button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>About Us</h1>
+        <div class="profile-container">
+            <% people.forEach(person => { %>
+            <div class="profile">
+                <img src="<%= person.image %>" alt="<%= person.name %>">
+                <div class="info">
+                    <p><strong><%= person.name %></strong></p>
+                    <p><%= person.description %></p>
+                </div>
+            </div>
+            <% }); %>
+        </div>
+        <div class="feedback-button">
+            <button onclick="showFeedbackForm()">Give Feedback</button>
+        </div>
+        <div class="feedback-form" id="feedbackForm">
+            <h2>Feedback</h2>
+            <form action="/feedback" method="POST">
+                <textarea name="feedback" placeholder="Write your feedback here"></textarea><br>
+                <button type="submit">Submit Feedback</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showFeedbackForm() {
+            var feedbackForm = document.getElementById("feedbackForm");
+            feedbackForm.style.display = "block";
+        }
+    </script>
+</body>
+
+</html>

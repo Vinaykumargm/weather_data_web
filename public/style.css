@@ -1,0 +1,250 @@
+/* Global Styles */
+
+body {
+    background-image: url('https://images.unsplash.com/photo-1601134467661-3d775b999c8b?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    background-size: cover;
+    background-position: center;
+}
+
+.one {
+    background-image: url('https://c7.alamy.com/comp/ECMD14/hand-pushing-virtual-security-button-on-digital-background-ECMD14.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+.one h2{
+    color:rgb(224, 29, 29);
+    font-weight: bolder;
+}
+
+.weather-info input {
+    width: 190px;
+    height: 30px; /* Adjust width as needed */
+    margin-bottom: 10px; /* Add space between input fields */
+}
+
+.weather-info #weather-results {
+    color:darkred;
+    font-weight: bolder;
+    
+}
+
+
+
+.container li{
+    color:black;
+    font-weight: bolder;
+
+}
+
+/* style.css */
+#two {
+    width: 400px; 
+    height: 300px; 
+    margin: 0 auto; 
+    display: block; 
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h2, h3 {
+    text-align: center;
+}
+
+/* Home Page Styles */
+
+.container.home {
+    text-align: center;
+}
+
+.features {
+    margin-top: 20px;
+}
+
+.features h2 {
+    margin-bottom: 10px;
+}
+
+.features ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.features li {
+    margin-bottom: 10px;
+}
+
+.features li::before {
+    content: "•";
+    margin-right: 5px;
+}
+
+/* Login Page Styles */
+
+.container.login {
+    text-align: center;
+}
+
+.feature-option {
+    margin-top: 20px;
+}
+
+.feature-option a {
+    display: block;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.feature-option a:hover {
+    background-color: #e0e0e0;
+}
+
+/* Quiz Page Styles */
+
+.quiz-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.quiz-container h1 {
+    margin-bottom: 20px;
+}
+
+.quiz-container form {
+    margin-top: 20px;
+}
+
+.quiz-container label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.quiz-container input[type="email"], .quiz-container input[type="radio"] {
+    margin-right: 10px;
+}
+
+.quiz-container button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto 0;
+    transition: background-color 0.3s ease;
+}
+
+.quiz-container button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Signup Page Styles */
+
+.container.signup {
+    text-align: center;
+}
+
+/* Weather Forecasts Page Styles */
+
+.container.weather {
+    text-align: center;
+}
+
+.forecast-info {
+    margin-top: 20px;
+}
+
+.forecast-info label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.forecast-info input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.forecast-info button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.forecast-info button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Facts Page Styles */
+
+.container.facts {
+    text-align: left;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.container.facts p {
+    margin-bottom: 20px;
+}
+
+/* About Us Page Styles */
+
+.container.aboutUs {
+    text-align: center;
+    padding: 20px;
+}
+
+.about-person {
+    margin-bottom: 20px;
+}
+
+.about-person img {
+    width: 200px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.about-person h3 {
+    margin-bottom: 5px;
+}
+
+.about-person p {
+    margin-bottom: 20px;
+}
+
+/* Error Message Styles */
+
+.error-message {
+    color: red;
+}
+

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        /* Additional styles for centering content */
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .weather-info {
+            margin-top: 20px;
+        }
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Real-time Weather Data</h1>
+        
+        <div class="weather-info">
+            <!-- <label for="go" >search Google</label>
+            <form action="https://www.google.com/">
+            <input type="text" name="q" placeholder="search google for valid city name">
+            <button type="submit">Submit</button>
+            </form> -->
+            <form id="weather-form">
+                <label for="city">Enter City Name:</label><br>
+                <input type="text" id="city" name="city" required><br>
+                <button type="submit">Get Weather</button>
+            </form>
+
+            <div id="weather-results" style="display: none;">
+                <h2>Current Weather</h2>
+                <p>City: <span id="city-name"></span></p>
+                <p>Temperature: <span id="temperature"></span>&deg;C</p>
+                <p>Weather: <span id="weather"></span></p>
+                <p>Humidity: <span id="humidity"></span>%</p>
+                <p>Wind Speed: <span id="wind-speed"></span> m/s</p>
+            </div>
+            <p id="error-message" class="error-message" style="display: none;"></p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('weather-form');
+        const resultsDiv = document.getElementById('weather-results');
+        const errorMessage = document.getElementById('error-message');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const cityInput = document.getElementById('city').value.trim();
+
+            fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityInput}&appid=f8cbe4b4a6caa4eaaf1c8ff71bebd79f&units=metric`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('City not found');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    resultsDiv.style.display = 'block';
+                    errorMessage.style.display = 'none';
+
+                    document.getElementById('city-name').innerText = data.name;
+                    document.getElementById('temperature').innerText = data.main.temp;
+                    document.getElementById('weather').innerText = data.weather[0].description;
+                    document.getElementById('humidity').innerText = data.main.humidity;
+                    document.getElementById('wind-speed').innerText = data.wind.speed;
+                })
+                .catch(error => {
+                    resultsDiv.style.display = 'none';
+                    errorMessage.style.display = 'block';
+                    errorMessage.innerText = 'Error: ' + error.message;
+                });
+        });
+    </script>
+</body>
+</html>

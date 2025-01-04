@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecasts</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        /* Additional styles for centering content */
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .forecast-info {
+            margin-top: 20px;
+        }
+        .forecast-item {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Forecasts</h1>
+        
+        <div class="forecast-info">
+            <form id="weather-form">
+                <label for="city">Enter City Name:</label><br>
+                <input type="text" id="city" name="city" required><br>
+                <button type="submit">Get Forecast</button>
+            </form>
+
+            <div id="forecast-results" style="display: none;">
+                <!-- Forecast data will be dynamically added here -->
+            </div>
+            <p id="error-message" class="error-message" style="display: none;"></p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('weather-form');
+        const resultsDiv = document.getElementById('forecast-results');
+        const errorMessage = document.getElementById('error-message');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const cityInput = document.getElementById('city').value.trim();
+
+            fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${cityInput}&appid=6af719c8f160363ad5c1619cf00cb08f&units=metric`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('City not found');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    resultsDiv.innerHTML = ''; // Clear previous results
+                    resultsDiv.style.display = 'block';
+                    errorMessage.style.display = 'none';
+
+                    // Loop through the forecast data and create forecast items
+                    data.list.forEach(forecast => {
+                        const forecastItem = document.createElement('div');
+                        forecastItem.classList.add('forecast-item');
+
+                        const date = new Date(forecast.dt * 1000);
+                        const dateString = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                        const timeString = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' });
+
+                        forecastItem.innerHTML = `
+                            <p>Date: ${dateString}</p>
+                            <p>Time: ${timeString}</p>
+                            <p>Temperature: ${forecast.main.temp}&deg;C</p>
+                            <p>Weather: ${forecast.weather[0].description}</p>
+                        `;
+
+                        resultsDiv.appendChild(forecastItem);
+                    });
+                })
+                .catch(error => {
+                    resultsDiv.style.display = 'none';
+                    errorMessage.style.display = 'block';
+                    errorMessage.innerText = 'Error: ' + error.message;
+                });
+        });
+    </script>
+</body>
+</html>

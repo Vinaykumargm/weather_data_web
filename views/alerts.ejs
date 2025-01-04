@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Alerts</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        /* Additional styles for centering content */
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .alert-info {
+            margin-top: 20px;
+        }
+        .alert-item {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Alerts</h1>
+        
+        <div class="alert-info">
+            <form id="weather-form">
+                <label for="city">Enter City Name:</label><br>
+                <input type="text" id="city" name="city" required><br>
+                <label for="email">Enter Email:</label><br>
+                <input type="email" id="email" name="email" required><br>
+                <button type="submit">Get Alerts</button>
+            </form>
+
+            <div id="alert-results" style="display: none;">
+                <!-- Alert data will be dynamically added here -->
+            </div>
+            <p id="error-message" class="error-message" style="display: none;"></p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('weather-form');
+        const resultsDiv = document.getElementById('alert-results');
+        const errorMessage = document.getElementById('error-message');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const cityInput = document.getElementById('city').value.trim();
+            const emailInput = document.getElementById('email').value.trim();
+
+            const apiKey = '6af719c8f160363ad5c1619cf00cb08f';
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&appid=${apiKey}&units=metric`;
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('City not found');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    resultsDiv.innerHTML = ''; // Clear previous results
+                    resultsDiv.style.display = 'block';
+                    errorMessage.style.display = 'none';
+
+                    const alertMessages = [];
+
+                    // Check if weather data contains alerts
+                    if (data.weather && data.weather.length > 0) {
+                        data.weather.forEach(alert => {
+                            const alertItem = document.createElement('div');
+                            alertItem.classList.add('alert-item');
+
+                            const alertMessage = `Alert: ${alert.description}, Main: ${alert.main}`;
+                            alertMessages.push(alertMessage);
+
+                            alertItem.innerHTML = `
+                                <p>${alertMessage}</p>
+                            `;
+
+                            resultsDiv.appendChild(alertItem);
+                        });
+                    } else {
+                        const noAlertMessage = 'No weather alerts found for this city.';
+                        resultsDiv.innerHTML = `<p>${noAlertMessage}</p>`;
+                        alertMessages.push(noAlertMessage);
+                    }
+
+                    // Send the alert messages to the server to be emailed
+                    fetch('http://localhost:8080/send-email', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            email: emailInput,
+                            alerts: alertMessages,
+                        }),
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to send email');
+                        }
+                        return response.json();
+                    })
+                    .then(responseData => {
+                        console.log('Email sent successfully:', responseData);
+                    })
+                    .catch(error => {
+                        console.error('Error sending email:', error);
+                    });
+                })
+                .catch(error => {
+                    resultsDiv.style.display = 'none';
+                    errorMessage.style.display = 'block';
+                    errorMessage.innerText = 'Error: ' + error.message;
+                });
+        });
+    </script>
+</body>
+</html>
